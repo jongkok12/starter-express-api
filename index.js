@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
       return res.status(500).send('Internal Server Error')
     }
 
+    res.setHeader('Access-Control-Allow-Origin', '*')
     res.json(JSON.parse(data))
   })
 })
@@ -40,6 +41,7 @@ app.get('/', (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server started on port ${process.env.PORT || 3000}`)
 })
+
 
 
 const axios = require('axios');
