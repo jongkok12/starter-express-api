@@ -134,6 +134,7 @@ function extractTableDataFromHtml(html) {
 // Tambahkan endpoint API baru (misalnya, /api/data)
 app.get('/api/data', async (req, res) => {
   try {
+    res.setHeader('Access-Control-Allow-Origin', '*')
     const html = await fetchDataFromUrl(url);
     const tableData = extractTableDataFromHtml(html);
     res.json(tableData);
