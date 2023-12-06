@@ -1,26 +1,26 @@
 
-const express = require('express');
-const app = express();
-const port = 3000;
+// const express = require('express');
+// const app = express();
+// const port = 3000;
 
-const jsonData = require('./data.json');
+// const jsonData = require('./data.json');
 
-app.get('/data', (req, res) => {
-  res.json(jsonData);
-});
+// app.get('/data', (req, res) => {
+//   res.json(jsonData);
+// });
 
-app.listen(port, () => {
-  console.log(`Aplikasi berjalan di http://localhost:${port}/data`);
-});
+// app.listen(port, () => {
+//   console.log(`Aplikasi berjalan di http://localhost:${port}/data`);
+// });
 
-const express = require('express')
-const app = express()
+// const express = require('express')
+// const app = express()
 
-app.all('/', (req, res) => {
-    console.log("Just got a request!")
-    res.send('Yo!')
-})
-app.listen(process.env.PORT || 3000)
+// app.all('/', (req, res) => {
+//     console.log("Just got a request!")
+//     res.send('Yo!')
+// })
+// app.listen(process.env.PORT || 3000)
 /////////////////////////////////////////////////////
 // const express = require('express')
 
@@ -33,8 +33,8 @@ app.listen(process.env.PORT || 3000)
 //       return res.status(500).send('Internal Server Error')
 //     }
 
-//     res.setHeader('Access-Control-Allow-Origin', '*')
-//     res.json(JSON.parse(data))
+    // res.setHeader('Access-Control-Allow-Origin', '*')
+    // res.json(JSON.parse(data))
 //   })
 // })
 
@@ -113,6 +113,7 @@ app.get('/', async (req, res) => {
   try {
 
     // Menggunakan dynamic import untuk mengimpor 'node-fetch'
+        res.setHeader('Access-Control-Allow-Origin', '*')
 
     const { default: fetch } = await import('node-fetch');
 
