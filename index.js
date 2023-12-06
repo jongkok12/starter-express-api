@@ -1,26 +1,26 @@
 
-// const express = require('express');
-// const app = express();
-// const port = 3000;
+const express = require('express');
+const app = express();
+const port = 3000;
 
-// const jsonData = require('./data.json');
+const jsonData = require('./data.json');
 
-// app.get('/data', (req, res) => {
-//   res.json(jsonData);
-// });
+app.get('/data', (req, res) => {
+  res.json(jsonData);
+});
 
-// app.listen(port, () => {
-//   console.log(`Aplikasi berjalan di http://localhost:${port}/data`);
-// });
+app.listen(port, () => {
+  console.log(`Aplikasi berjalan di http://localhost:${port}/data`);
+});
 
-// const express = require('express')
-// const app = express()
+const express = require('express')
+const app = express()
 
-// app.all('/', (req, res) => {
-//     console.log("Just got a request!")
-//     res.send('Yo!')
-// })
-// app.listen(process.env.PORT || 3000)
+app.all('/', (req, res) => {
+    console.log("Just got a request!")
+    res.send('Yo!')
+})
+app.listen(process.env.PORT || 3000)
 /////////////////////////////////////////////////////
 // const express = require('express')
 
@@ -116,8 +116,6 @@ app.get('/', async (req, res) => {
 
     const { default: fetch } = await import('node-fetch');
 
-res.setHeader('Access-Control-Allow-Origin', '*')
-    res.json(JSON.parse(data))
     const response = await fetch(url);
 
     const html = await response.text();
