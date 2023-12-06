@@ -88,84 +88,62 @@
 
 //////////////////////////////////////////////
 
-const express = require('express')
-
-const app = express()
-
-
+const express = require('express');
 const cheerio = require('cheerio');
+const fetch = require('node-fetch');
 
-
-
+const app = express();
 const port = 3000;
-
 
 const url = 'https://w3.angkanet.zone/wp-content/plugins/togelmania/datalive/datalivehk.php';
 
-
-// const url = 'https://w3.angkanet.zone/wp-content/plugins/togelmania/datalive/sd.php';
-
-
-
-
 app.get('/', async (req, res) => {
-
   try {
-
-    // Menggunakan dynamic import untuk mengimpor 'node-fetch'
-        res.setHeader('Access-Control-Allow-Origin', '*')
-
-    const { default: fetch } = await import('node-fetch');
-
-    const response = await fetch(url);
-
-    const html = await response.text();
-
-
-    // Menggunakan cheerio untuk mem-parsing HTML
-
-    const $ = cheerio.load(html);
-
-
-    // Mengekstrak data dari tabel
-
-    const tableData = [];
-
-    $('table tbody tr').each((index, element) => {
-
-      const columns = $(element).find('td');
-
-      const rowData = {
-
-        name: $(columns[0]).text().trim(),
-
-        number: $(columns[1]).text().trim()
-
-      };
-
-      tableData.push(rowData);
-
-    });
-
-
-    // Kirim data tabel sebagai JSON
-
+    const html = await fetchDataFromUrl(url);
+    const tableData = extractTableDataFromHtml(html);
     res.json(tableData);
-
   } catch (error) {
-
     console.error('Error fetching data:', error);
-
     res.status(500).json({ error: 'Error fetching data' });
-
   }
-
 });
 
+// Fungsi untuk mengambil data HTML dari URL
+async function fetchDataFromUrl(url) {
+  const response = await fetch(url);
+  return await response.text();
+}
+
+// Fungsi untuk mengekstrak data tabel dari HTML menggunakan Cheerio
+function extractTableDataFromHtml(html) {
+  const $ = cheerio.load(html);
+  const tableData = [];
+
+  $('table tbody tr').each((index, element) => {
+    const columns = $(element).find('td');
+    const rowData = {
+      name: $(columns[0]).text().trim(),
+      number: $(columns[1]).text().trim()
+    };
+    tableData.push(rowData);
+  });
+
+  return tableData;
+}
+
+// Tambahkan endpoint API baru (misalnya, /api/data)
+app.get('/api/data', async (req, res) => {
+  try {
+    const html = await fetchDataFromUrl(url);
+    const tableData = extractTableDataFromHtml(html);
+    res.json(tableData);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'Error fetching data' });
+  }
+});
 
 app.listen(port, () => {
-
   console.log(`Server is running on port ${port}`);
-
 });
 
