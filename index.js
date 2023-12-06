@@ -98,6 +98,7 @@ const port = 3000;
 const url = 'https://w3.angkanet.zone/wp-content/plugins/togelmania/datalive/datalivehk.php';
 
 app.get('/', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
   try {
     const html = await fetchDataFromUrl(url);
     const tableData = extractTableDataFromHtml(html);
