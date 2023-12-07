@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LIVE DRAW SYDNEY</title>
+
+
+  <style>
+    
+#container {
+  max-width: 100%;
+  margin: 0 auto; /* Memberikan margin otomatis pada sisi kiri dan kanan */
+  width: 1042px;
+}
+    
+h1 {
+  font-size: 1.500rem; 
+  text-align: center;
+}
+
+
+
+    body {
+    
+      font-family: 'Arimo', sans-serif;
+      background-color: transparent;
+    }
+
+    
+   table {
+  width: 100%;
+  border-collapse: collapse; /* Menggabungkan batas antar sel */
+}
+    
+    
+th, td {
+    border: 1px solid #AAA;
+    font-size: unset!important;
+	height:40px;
+}
+#live table {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.prize {
+    background: linear-gradient(to top, #010e4e 0%,#060ba3 70%,#0f01cd 100%);
+	color:white;
+	width:50%;
+}
+    
+
+th, td {
+    border: 1px solid #AAA;
+    font-size: unset!important;
+}
+#live table {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1,6px;
+      border: 2px solid #0f01cd;
+}
+#live table tr:nth-child(1) {
+ background: linear-gradient(to top, #010e4e 0%,#060ba3 70%,#0f01cd 100%);
+color:white;
+font-size:15px!important;
+}
+.nameprize {
+     background: linear-gradient(to top, #010e4e 0%,#060ba3 70%,#0f01cd 100%);
+	color:white;
+	width:50%;
+}
+
+.dots-7 {
+  width: 30px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side,#e5b8b8 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 100%;
+  animation: d7 1s infinite linear;
+  padding: 6px;
+}
+@keyframes d7 {
+    33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
+    50%{background-size:calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%}
+    66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%  }
+}
+
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div id="container">
+
+
+  <h1>LIVE DRAW SGP RESULT</h1>
+  
+<div id="live" class="sgp4d">
+
+<table id="dataTable">
+  <tbody>
+  </tbody>
+</table>
+  </div>
+
+
+
+
+<div id="live" class="sgptoto">
+
+<table id="livesgptoto">
+
+  <tbody>
+  </tbody>
+</table>
+  </div>
+
+
+
+  
+</div>
+
+ <script>
+  // Function to create table rows dynamically
+  function createTableRows(data) {
+    const tbody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+
+    // Clear existing rows
+    tbody.innerHTML = '';
+
+    data.slice(0, 9).forEach((item, index) => {
+
+// Menambahkan baris baru
+const newRow = tbody.insertRow(0);
+
+// Menambahkan sel-sel baru untuk baris
+const newCell1 = newRow.insertCell(0);
+
+if (index === 0) {
+    
+    newCell1.classList.add('tanggal');
+    newCell1.colSpan = 6;
+    newCell1.textContent = item.s6;
+
+}
+
+// Pengecekan apakah kontennya kosong, dan menghapus baris jika ya
+if (!newCell1.textContent.trim()) {
+    tbody.deleteRow(0);
+}
+
+
+const row = tbody.insertRow();
+
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+      const cell4 = row.insertCell(3);
+      const cell5 = row.insertCell(4);
+
+
+
+
+      if ( index === 0  || index === 1 || index === 2 ) {
+        cell1.classList.add('prize'); 
+
+    
+
+        cell1.colSpan = 3;
+        cell1.textContent = item.s1; // Isi cell1 dengan nama item
+
+        cell2.colSpan = 3;
+        cell2.textContent = item.s2; // Isi cell1 dengan nama item
+
+        cell3.colSpan = 3;
+        row.deleteCell(2);
+        row.deleteCell(2);
+        row.deleteCell(2);
+
+      } 
+
+      if (index === 3 || index === 6 ) {
+        cell1.classList.add('prize'); 
+        cell1.colSpan = 6;
+        cell1.textContent = item.s1; 
+        // cell1.textContent = item.s6; 
+        cell2.colSpan = 4;
+        row.deleteCell(2);
+        row.deleteCell(2);
+        row.deleteCell(2);
+        row.deleteCell(1);
+   
+      } 
+
+
+
+      if ( index === 4 || index === 5  || index === 7 || index === 8 ) {
+        // cell1.classList.add('prize'); // Menambahkan kelas 'tanggal'
+        cell1.colSpan = 1;
+        cell1.textContent = item.s1; 
+        cell2.colSpan = 1;
+        cell2.textContent = item.s2; 
+        cell3.colSpan = 2;
+        cell3.textContent = item.s3;
+        cell4.colSpan = 1;
+        cell4.textContent = item.s4;
+        cell5.colSpan = 1;
+        cell5.textContent = item.s5; 
+      } 
+
+    if (item.s2.trim() === '') {
+      // Jika item.s2 kosong, isi dengan elemen dots-7
+      const dotsContainer = document.createElement('center');
+      const dotsDiv = document.createElement('div');
+      dotsDiv.classList.add('dots-7');
+      dotsContainer.appendChild(dotsDiv);
+      cell2.appendChild(dotsContainer);
+    } else {
+      // Jika item.s2 tidak kosong, isi dengan nilai item.s2
+      cell2.textContent = item.s2;
+    }
+  });
+}
+
+
+
+  // Function to fetch JSON data and update the table
+  function fetchDataAndUpdateTable() {
+    fetch('/api/sgp4d/')
+      .then(response => response.json())
+      .then(data => createTableRows(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }
+
+  // Initial fetch and update
+  fetchDataAndUpdateTable();
+
+  // Set interval to fetch and update data every 5000 milliseconds (5 seconds)
+  setInterval(fetchDataAndUpdateTable, 5000);
+</script>
+
+<script>
+    // Function to create table rows dynamically
+    function createTableRows1(data) {
+      const tbody = document.getElementById('livesgptoto').getElementsByTagName('tbody')[0];
+  
+      // Clear existing rows
+      tbody.innerHTML = '';
+  
+      data.slice(0, 1).forEach((item, index) => {
+  
+  // Menambahkan baris baru
+  const newRow = tbody.insertRow(0);
+  
+  // Menambahkan sel-sel baru untuk baris
+  const newCell1 = newRow.insertCell(0);
+  
+  if (index === 0) {
+      
+      newCell1.classList.add('tanggal');
+      newCell1.colSpan = 8;
+      newCell1.textContent = item.s9;
+  
+  }
+  
+  // Pengecekan apakah kontennya kosong, dan menghapus baris jika ya
+  if (!newCell1.textContent.trim()) {
+      tbody.deleteRow(0);
+  }
+  
+  
+  const row = tbody.insertRow();
+  
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+        const cell4 = row.insertCell(3);
+        const cell5 = row.insertCell(4);
+        const cell6 = row.insertCell(5);
+        const cell7 = row.insertCell(6);
+        const cell8 = row.insertCell(7);
+        // const cell9 = row.insertCell(8);
+
+
+        if (  index === 0  ) {
+          // cell1.classList.add('prize'); // Menambahkan kelas 'tanggal'
+          cell1.colSpan = 1;
+          cell1.textContent = item.s1; 
+          cell2.colSpan = 1;
+          cell2.textContent = item.s2; 
+          cell3.colSpan = 1;
+          cell3.textContent = item.s3;
+          cell4.colSpan = 1;
+          cell4.textContent = item.s4;
+          cell5.colSpan = 1;
+          cell5.textContent = item.s5; 
+          cell6.colSpan = 1;
+          cell6.textContent = item.s6;
+          cell7.colSpan = 1;
+          cell7.textContent = item.s7;
+          cell8.colSpan = 1;
+          cell8.textContent = item.s8; 
+        } 
+  
+  
+  
+  
+        // if ( index === 0  || index === 1 || index === 2 ) {
+        //   cell1.classList.add('prize'); 
+  
+      
+  
+        //   cell1.colSpan = 3;
+        //   cell1.textContent = item.s1; // Isi cell1 dengan nama item
+  
+        //   cell2.colSpan = 3;
+        //   cell2.textContent = item.s2; // Isi cell1 dengan nama item
+  
+        //   cell3.colSpan = 3;
+        //   row.deleteCell(2);
+        //   row.deleteCell(2);
+        //   row.deleteCell(2);
+  
+        // } 
+  
+        // if (index === 3 || index === 6 ) {
+        //   cell1.classList.add('prize'); 
+        //   cell1.colSpan = 6;
+        //   cell1.textContent = item.s1; 
+        //   // cell1.textContent = item.s6; 
+        //   cell2.colSpan = 4;
+        //   row.deleteCell(2);
+        //   row.deleteCell(2);
+        //   row.deleteCell(2);
+        //   row.deleteCell(1);
+     
+        // } 
+  
+  
+  
+        if (  index === 1  ) {
+          // cell1.classList.add('prize'); // Menambahkan kelas 'tanggal'
+          cell1.colSpan = 4;
+          cell1.textContent = item.s1; 
+          cell2.colSpan = 4;
+          cell2.textContent = item.s2; 
+        //   cell3.colSpan = 2;
+        //   cell3.textContent = item.s3;
+        //   cell4.colSpan = 1;
+        //   cell4.textContent = item.s4;
+        //   cell5.colSpan = 1;
+        //   cell5.textContent = item.s5; 
+        //        row.deleteCell(4);
+        //   row.deleteCell(4);
+        //   row.deleteCell(4);
+        //   row.deleteCell(2);
+        //   row.deleteCell(2);
+        //   row.deleteCell(2);
+        //   row.deleteCell(1);
+        } 
+  
+      if (item.s2.trim() === '') {
+        // Jika item.s2 kosong, isi dengan elemen dots-7
+        const dotsContainer = document.createElement('center');
+        const dotsDiv = document.createElement('div');
+        dotsDiv.classList.add('dots-7');
+        dotsContainer.appendChild(dotsDiv);
+        cell2.appendChild(dotsContainer);
+      } else {
+        // Jika item.s2 tidak kosong, isi dengan nilai item.s2
+        cell2.textContent = item.s2;
+      }
+    });
+  }
+  
+  
+  
+    // Function to fetch JSON data and update the table
+    function fetchDataAndUpdateTable() {
+      fetch('/api/sgptoto/')
+        .then(response => response.json())
+        .then(data => createTableRows1(data))
+        .catch(error => console.error('Error fetching data:', error));
+    }
+  
+    // Initial fetch and update
+    fetchDataAndUpdateTable();
+  
+    // Set interval to fetch and update data every 5000 milliseconds (5 seconds)
+    setInterval(fetchDataAndUpdateTable, 5000);
+  </script>
+
+ 
+
+
+</body>
+</html>
