@@ -1,151 +1,162 @@
-
-// const express = require('express');
-// const app = express();
-// const port = 3000;
-
-// const jsonData = require('./data.json');
-
-// app.get('/data', (req, res) => {
-//   res.json(jsonData);
-// });
-
-// app.listen(port, () => {
-//   console.log(`Aplikasi berjalan di http://localhost:${port}/data`);
-// });
-
-// const express = require('express')
-// const app = express()
-
-// app.all('/', (req, res) => {
-//     console.log("Just got a request!")
-//     res.send('Yo!')
-// })
-// app.listen(process.env.PORT || 3000)
-/////////////////////////////////////////////////////
-// const express = require('express')
-
-// const app = express()
-
-// app.get('/', (req, res) => {
-//   fs.readFile('data.json', 'utf8', (err, data) => {
-//     if (err) {
-//       console.error(err)
-//       return res.status(500).send('Internal Server Error')
-//     }
-
-    // res.setHeader('Access-Control-Allow-Origin', '*')
-    // res.json(JSON.parse(data))
-//   })
-// })
-
-// app.listen(process.env.PORT || 3000, () => {
-//   console.log(`Server started on port ${process.env.PORT || 3000}`)
-// })
-
-
-
-// const axios = require('axios');
-// const cheerio = require('cheerio');
-// const fs = require('fs');
-
-// axios.get('https://hongkong.pools.wiki/')
-//   .then(response => {
-//     const $ = cheerio.load(response.data);
-//     const tableRows = $('table tr');
-//     const tableData = [];
-
-//     tableRows.each((i, row) => {
-//       const rowData = [];
-//       $(row).find('td').each((j, cell) => {
-//         rowData.push($(cell).text().trim());
-//       });
-//       if (rowData.length > 0) {
-//         tableData.push(rowData);
-//       }
-//     });
-
-//     const headers = tableData.shift();
-//     const jsonData = tableData.map(row => {
-//       const obj = {};
-//       row.forEach((cell, i) => {
-//         obj[headers[i]] = cell;
-//       });
-//       return obj;
-//     });
-
-//     const jsonString = JSON.stringify(jsonData);
-//     fs.writeFile('data.json', jsonString, 'utf8', err => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         console.log('Data saved to data.json');
-//       }
-//     });
-//   })
-//   .catch(error => {
-//     console.log(error);
-//   });
-
-//////////////////////////////////////////////
-
 const express = require('express');
 const cheerio = require('cheerio');
-
-
+const { resolve } = require('path');
 const app = express();
 const port = 3000;
 
-const url = 'https://w3.angkanet.zone/wp-content/plugins/togelmania/datalive/datalivehk.php';
+app.use(express.static('static'));
 
-app.get('/', async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
+app.get('/', (req, res) => {
+  res.sendFile(resolve(__dirname, 'pages/index.html'));
+});
+
+app.get('/sdy', (req, res) => {
+  res.sendFile(resolve(__dirname, 'pages/sdy.html'));
+});
+
+app.get('/sgp4d', (req, res) => {
+  res.sendFile(resolve(__dirname, 'pages/sgp4d.html'));
+});
+
+const hkUrl = 'https://w4.angkanet.zone/wp-content/plugins/togelmania/datalive/datalivehk.php';
+const sdUrl = 'https://w4.angkanet.zone/wp-content/plugins/togelmania/datalive/sd.php';
+const sgp4dUrl = 'https://w4.angkanet.zone/wp-content/plugins/togelmania/datalive/sg4d.php';
+const sgptotodUrl = 'https://w4.angkanet.zone/wp-content/plugins/togelmania/datalive/sgtoto.php';
+
+
+// Endpoint untuk data tabel Hong Kong
+app.get('/api/hk', async (req, res) => {
   try {
-    const html = await fetchDataFromUrl(url);
-    const tableData = extractTableDataFromHtml(html);
+    const { default: fetch } = await import('node-fetch');
+    const response = await fetch(hkUrl);
+    const html = await response.text();
+    const $ = cheerio.load(html);
+    let idCounter = 1;
+
+    const tableData = [];
+
+    $('table tbody tr').each((index, element) => {
+      const columns = $(element).find('td');
+      const rowData = {
+        id: idCounter++,
+        name: $(columns[0]).text().trim(),
+        number: $(columns[1]).text().trim()
+      };
+      tableData.push(rowData);
+    });
+
     res.json(tableData);
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'Error fetching data' });
+    console.error('Error fetching HK data:', error);
+    res.status(500).json({ error: 'Error fetching HK data' });
   }
 });
 
-// Fungsi untuk mengambil data HTML dari URL
-async function fetchDataFromUrl(url) {
-  const response = await fetch(url);
-  return await response.text();
-}
-
-// Fungsi untuk mengekstrak data tabel dari HTML menggunakan Cheerio
-function extractTableDataFromHtml(html) {
-  const $ = cheerio.load(html);
-  const tableData = [];
-
-  $('table tbody tr').each((index, element) => {
-    const columns = $(element).find('td');
-    const rowData = {
-      name: $(columns[0]).text().trim(),
-      number: $(columns[1]).text().trim()
-    };
-    tableData.push(rowData);
-  });
-
-  return tableData;
-}
-
-// Tambahkan endpoint API baru (misalnya, /api/data)
-app.get('/api/data', async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
+// Endpoint untuk data tabel Sydney
+app.get('/api/sdy', async (req, res) => {
   try {
-    const html = await fetchDataFromUrl(url);
-    const tableData = extractTableDataFromHtml(html);
+    const { default: fetch } = await import('node-fetch');
+    const response = await fetch(sdUrl);
+    const html = await response.text();
+    const $ = cheerio.load(html);
+    let idCounter = 1;
+
+    const tableData = [];
+
+    $('table tbody tr').each((index, element) => {
+      const columns = $(element).find('td');
+      const rowData = {
+        id: idCounter++,
+        name: $(columns[0]).text().trim(),
+        number: $(columns[1]).text().trim()
+      };
+      tableData.push(rowData);
+    });
+
     res.json(tableData);
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'Error fetching data' });
+    console.error('Error fetching SDY data:', error);
+    res.status(500).json({ error: 'Error fetching SDY data' });
+  }
+});
+
+
+// Endpoint untuk data tabel SGP4D
+app.get('/api/sgp4d', async (req, res) => {
+  try {
+    const { default: fetch } = await import('node-fetch');
+    const response = await fetch(sgp4dUrl);
+    const html = await response.text();
+    const $ = cheerio.load(html);
+    let idCounter = 1;
+
+    const tableData = [];
+
+    // Mengambil judul
+const judul = $('.judul').text().trim();
+
+
+    $('table tbody tr').each((index, element) => {
+      const columns = $(element).find('td');
+      const rowData = {
+        s6: judul,
+        id: idCounter++,
+
+        s1: $(columns[0]).text().trim(),
+        s2: $(columns[1]).text().trim(),
+        s3: $(columns[2]).text().trim(),
+        s4: $(columns[3]).text().trim(),
+        s5: $(columns[4]).text().trim(),
+        
+      };
+      tableData.push(rowData);
+    });
+
+    res.json(tableData);
+  } catch (error) {
+    console.error('Error fetching SGP4D data:', error);
+    res.status(500).json({ error: 'Error fetching SGP4D data' });
+  }
+});
+
+
+// Endpoint untuk data tabel SGPTOTO
+app.get('/api/sgptoto', async (req, res) => {
+  try {
+    const { default: fetch } = await import('node-fetch');
+    const response = await fetch(sgptotodUrl);
+    const html = await response.text();
+    const $ = cheerio.load(html);
+    let idCounter = 1;
+
+    const tableData = [];
+    const judul = $('.judul').text().trim();
+
+    $('table tbody tr').each((index, element) => {
+      const columns = $(element).find('td');
+      const rowData = {
+        s9: judul,
+        id: idCounter++,
+        s1: $(columns[0]).text().trim(),
+        s2: $(columns[1]).text().trim(),
+        s3: $(columns[2]).text().trim(),
+        s4: $(columns[3]).text().trim(),
+        s5: $(columns[4]).text().trim(),
+        s6: $(columns[5]).text().trim(),
+        s7: $(columns[6]).text().trim(),
+        s8: $(columns[7]).text().trim(),
+        
+      };
+      tableData.push(rowData);
+    });
+
+    res.json(tableData);
+  } catch (error) {
+    console.error('Error fetching SGPTOTO data:', error);
+    res.status(500).json({ error: 'Error fetching SGPTOTO data' });
   }
 });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
