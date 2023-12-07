@@ -26,6 +26,7 @@ const sgptotodUrl = 'https://w4.angkanet.zone/wp-content/plugins/togelmania/data
 
 // Endpoint untuk data tabel Hong Kong
 app.get('/api/hk', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
   try {
     const { default: fetch } = await import('node-fetch');
     const response = await fetch(hkUrl);
@@ -54,6 +55,7 @@ app.get('/api/hk', async (req, res) => {
 
 // Endpoint untuk data tabel Sydney
 app.get('/api/sdy', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
   try {
     const { default: fetch } = await import('node-fetch');
     const response = await fetch(sdUrl);
@@ -83,6 +85,7 @@ app.get('/api/sdy', async (req, res) => {
 
 // Endpoint untuk data tabel SGP4D
 app.get('/api/sgp4d', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
   try {
     const { default: fetch } = await import('node-fetch');
     const response = await fetch(sgp4dUrl);
@@ -122,6 +125,7 @@ const judul = $('.judul').text().trim();
 
 // Endpoint untuk data tabel SGPTOTO
 app.get('/api/sgptoto', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
   try {
     const { default: fetch } = await import('node-fetch');
     const response = await fetch(sgptotodUrl);
