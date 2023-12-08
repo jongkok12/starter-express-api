@@ -4,19 +4,19 @@ const { resolve } = require('path');
 const app = express();
 const port = 3000;
 
-app.use(express.static('static'));
+// app.use(express.static('static'));
 
-app.get('/', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/index.html'));
-});
+// app.get('/', (req, res) => {
+//   res.sendFile(resolve(__dirname, 'pages/index.html'));
+// });
 
-app.get('/sdy', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/sdy.html'));
-});
+// app.get('/sdy', (req, res) => {
+//   res.sendFile(resolve(__dirname, 'pages/sdy.html'));
+// });
 
-app.get('/sgp4d', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/sgp4d.html'));
-});
+// app.get('/sgp4d', (req, res) => {
+//   res.sendFile(resolve(__dirname, 'pages/sgp4d.html'));
+// });
 
 const hkUrl = 'https://w4.angkanet.zone/wp-content/plugins/togelmania/datalive/datalivehk.php';
 const sdUrl = 'https://w4.angkanet.zone/wp-content/plugins/togelmania/datalive/sd.php';
